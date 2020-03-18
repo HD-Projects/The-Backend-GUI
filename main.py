@@ -116,4 +116,3 @@ class email:
       return 0;
     
 email.login()
-top = Tk()
