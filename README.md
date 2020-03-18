@@ -1,6 +1,6 @@
 # Email Backend GUI
 
-This is a project by 2, 7th graders in the **VRC compeditive robotics program**, beacuse our season was ended abruptly because of COVID-19
+This is a project by 2 7th graders in the **VRC compeditive robotics program**, beacuse our season was ended abruptly because of COVID-19
 
 # Overview
 
