@@ -56,17 +56,19 @@ class email:
     #e1.pack()
     e2 = Entry(top).grid(column = 1, row = 1)
     #e2.pack()
-    Button(top, text = "Done", command = email.addEmail)
+    b1 =  Button(top, text = "Done", command = top.destroy())
     top.mainloop()
-    b1 = 
     username = str(e1)
     password = str(e2)
     if ("@gmail.com" in username):
-      print("Username worked")
+      L1 = Label(top, text="Username Worked").grid(row = 0)
+      L1.pack()
+    elif("@outlook.com" in username):
+      L1 = Label(top, text="Username Worked").grid(row = 0)
+      L1.pack()
     else:
-      print("this email does not come from a supported provider \ntry an @gmail.com email\n more coming soon")
+      print("this email does not come from a supported provider \ntry an @gmail.com or @outlook.com email\n more coming soon")
     password = input("Input that password\n")
-    s = smtplib.SMTP('smtp.gmail.com', 587) 
     # start TLS for security 
     s.starttls()
     # Authentication 
