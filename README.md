@@ -1,6 +1,6 @@
 # Email Backend GUI
 
-This is a project by 2 7th graders in the **VRC compeditive robotics program**, beacuse our season was ended abruptly because of COVID-19 we wanted a project to work on so we made a game and started work on a email client
+This is a project by 2 7th graders in the **VRC competive robotics program**, beacuse our season was ended abruptly because of COVID-19 we wanted a project to work on so we made a game and started work on a email client
 
 # Overview
 
