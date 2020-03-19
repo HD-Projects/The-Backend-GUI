@@ -26,6 +26,7 @@ messages = """<html>
 s = smtplib.SMTP('smtp.gmail.com', 587) 
 
 
+supportedList = "Gmail, Outlook, Yahoo(Yahoo plus not supported yet), Office 365, Hotmail, AOL, O2, O2 UK, AT&T, \nNTL, BT Connect, BT Open World, BT Internet, Orange, Orange UK, Wanadoo UK, O2 Online Dutch, T-Online Dutch,\n1 and 1, 1 and 1 Dutch, Comcast, Verizon, Verizon Yahoo, YoHo, Mail or USANet"
 
 username = ""
 password = ""
@@ -41,18 +42,27 @@ class email:
     B2 = Button(top, text = "Remove Email From the Sending list", command = email.removeEmail).grid(row = 1)
     B3 = Button(top, text = "Send Emails", command = email.sendEmail).grid(row = 2)
     top.mainloop()
+  def getCredentials():
+     username = e1.get()
+     password = e2.get()
+     top.destroy()
   def loginSMTP():
     top = Tk()
     L1 = Label(top, text="Username").grid(row = 0)
     L2 = Label(top, text="Password").grid(row = 1)
-    e1 = Entry(top, textvariable = username).grid(column = 1, row = 0)
+    e1 = Entry(top, textvariable = username,).grid(column = 1, row = 0)
     e2 = Entry(top, textvariable = password).grid(column = 1, row = 1)
-    Button(top, text = "Done", command = top.destroy).grid(row = 2)
+    Button(top, text = "Done", command = email.getCredentials).grid(row = 2)
     top.mainloop()
     # start TLS for security 
-    s.starttls()
+    print("Debug Info: Username, "+  username+" Password, "+password)
+    try:
+       s.starttls()
+       print("Debug Info: TLS Worked")
+    except:
+       print("Debug Info: TLS Failed")
     # Authentication 
-    s.login(username, password)
+    s.login(str(username), str(password))
     print("Succesful you are now logged in and can send emails")
     email.run()
   def gmail():
@@ -135,7 +145,6 @@ class email:
     email.loginSMTP()
   def login():
     top = Tk()
-    supportedList = "Gmail, Outlook, Yahoo(Yahoo plus not supported yet), Office 365, Hotmail, AOL, O2, O2 UK, AT&T, \nNTL, BT Connect, BT Open World, BT Internet, Orange, Orange UK, Wanadoo UK, O2 Online Dutch, T-Online Dutch,\n1 and 1, 1 and 1 Dutch, Comcast, Verizon, Verizon Yahoo, YoHo, Mail or USANet"
     L1 = Label(top, text="Login to your email\nOur supported Email providers are\n"+supportedList).grid(row = 0)
     R1 = Button(top, text="Gmail", command = email.gmail).grid(row = 1)
     R2 = Button(top, text="Outlook", command = email.outlook).grid(row = 2)
@@ -182,8 +191,15 @@ class email:
     name.remove(names)
     email.remove(removeSTR)
     print("Removed")
-  def sendEmail(message):
+  def sendEmail():
+    msg = MIMEMultipart()       # create a message
+    # setup the parameters of the message
+    msg['From']=username
+    msg['To']=email
+    msg['Subject']="This is TEST"
+    msg['Body']=messages
 
+    s.send_message(msg)
     print("HI")
   def listCheck():
     if(len(emails)>500):
