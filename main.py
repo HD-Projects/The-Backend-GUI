@@ -40,10 +40,10 @@ e2 = ""
 class email:
   def run():
     top = Tk()
-    if(email.listCheck() == 0):
-      B1 = Button(top, text = "Add Email To The sending list", command = email.addEmail).grid(row = 0)
+    B1 = Button(top, text = "Add Email To The sending list", command = email.addEmail).grid(row = 0)
     B2 = Button(top, text = "Remove Email From the Sending list", command = email.removeEmail).grid(row = 1)
     B3 = Button(top, text = "Send Emails", command = email.sendEmail).grid(row = 2)
+    B4 = Button(top, text = "Done", command = top.destroy).grid(row = 3)
     top.mainloop()
   def getCredentials():
      username = e1
@@ -55,7 +55,8 @@ class email:
     L2 = Label(top, text="Password").grid(row = 1)
     e1 = Entry(top, textvariable = username,).grid(column = 1, row = 0)
     e2 = Entry(top, textvariable = password).grid(column = 1, row = 1)
-    Button(top, text = "Done, press the close button when you are done", command = email.getCredentials).grid(row = 2)
+    Button(top, text = "Done", command = email.getCredentials).grid(row = 2)
+    Button(top, text = "Done, closes window", command = top.destroy).grid(row = 3)
     top.mainloop()
     # start TLS for security 
     print("Debug Info: Username, "+  username+" Password, "+password)
@@ -178,11 +179,14 @@ class email:
     Button(top, text = "Done", command = top.destroy).grid(row = 14)
     top.mainloop()
   def addEmail():
+    top = Tk()
     top.destroy()
     top = Tk()
-    e1 = Entry(top, textvariable = name).grid(column = 1, row = 1)
-    e2 = Entry(top, textvariable = email).grid(column = 1, row = 1)
-  
+    L1 = Label(top, text="Name").grid(row = 0)
+    L2 = Label(top, text="Email").grid(row = 1)
+    e1 = Entry(top, textvariable = "name").grid(column = 1, row = 0)
+    e2 = Entry(top, textvariable = "email").grid(column = 1, row = 1)
+    Button(top, text = "Done", command = top.destroy).grid(row = 9)
   
       
     nameList = open("names.py", "w")
@@ -201,14 +205,16 @@ class email:
       names.write(element)
       names.write(',')
     names.close()
+    email.run()
 
   def removeEmail(names):
     removeNum = int(name.index(names))
-    removeSTR = (email[1])
+    removeSTR = (email[removeNum])
     name.remove(names)
     email.remove(removeSTR)
     print("Removed")
   def sendEmail():
+    top = Tk()
     L1 = Label(top, text="Username").grid(row = 0)
     L2 = Label(top, text="Password").grid(row = 1)
     e1 = Entry(top, textvariable = username,).grid(column = 1, row = 0)
@@ -219,8 +225,8 @@ class email:
     for i in range(len(names)):
       msg = MIMEMultipart()       # create a message
       # setup the parameters of the message
-      msg['From']=usernames[i]
-      msg['To']=email
+      msg['From']=usernames
+      msg['To']=emails[i]
       msg['Subject']="This is TEST"
       msg['Body']=messages
       s.send_message(msg)
