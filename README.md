@@ -4,8 +4,8 @@ This is a project by 2 Students in the **VRC competive robotics program**, beacu
 
 # Overview
 
-* We have been working on a game like asteroids the GitHub page is [Here](https://github.com/The-Bit-One/Asteroid_Dodge). This will be the email backend we use to send all the emails for our games mailing list.
-* We strted this because we have tried mailchimp and it sent all of the emails to our junk box
+* We have been working on a game like asteroids the GitHub page is [Here](https://github.com/The-Bit-One/Asteroid_Dodge). We have also made a platfomer game the link to the website is [Here] (https://sites.google.com/site/playdoctorcabbage/home) this will be the email backend we use to send all the emails for the mailing lists for these games.
+* We started this because we have tried mailchimp and it sent all of the emails to our junk box
 
 # Donations
 
