@@ -35,6 +35,7 @@ e2 = ""
 
 class email:
   def run():
+    top = Tk()
     if(email.listCheck() == 0):
       B1 = Button(top, text = "Add Email To The sending list", command = email.addEmail).grid(row = 0)
     B2 = Button(top, text = "Remove Email From the Sending list", command = email.removeEmail).grid(row = 1)
@@ -52,7 +53,6 @@ class email:
     s.starttls()
     # Authentication 
     s.login(username, password)
-    email.run()
     print("Succesful you are now logged in and can send emails")
     email.run()
   def gmail():
@@ -193,3 +193,4 @@ class email:
       return 0
     
 email.login()
+email.run()
