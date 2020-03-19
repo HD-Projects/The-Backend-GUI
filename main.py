@@ -3,11 +3,14 @@ import json
 from tkinter import *
 import cgi
 import time
+
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-nameList = open("names.json", "w")
-emailList = open("emails.json", "w")
+
+
+nameList = open("names.py", "w")
+emailList = open("emails.py", "w")
 
 listToWrite = ["hi","this","is","a","test"]
 
@@ -43,16 +46,16 @@ class email:
     B3 = Button(top, text = "Send Emails", command = email.sendEmail).grid(row = 2)
     top.mainloop()
   def getCredentials():
-     username = e1.get()
-     password = e2.get()
-     top.destroy()
+     username = e1
+     password = e2
+     print(username+" "+password)
   def loginSMTP():
     top = Tk()
     L1 = Label(top, text="Username").grid(row = 0)
     L2 = Label(top, text="Password").grid(row = 1)
     e1 = Entry(top, textvariable = username,).grid(column = 1, row = 0)
     e2 = Entry(top, textvariable = password).grid(column = 1, row = 1)
-    Button(top, text = "Done", command = email.getCredentials).grid(row = 2)
+    Button(top, text = "Done, press the close button when you are done", command = email.getCredentials).grid(row = 2)
     top.mainloop()
     # start TLS for security 
     print("Debug Info: Username, "+  username+" Password, "+password)
@@ -177,14 +180,28 @@ class email:
   def addEmail():
     top.destroy()
     top = Tk()
-    names.append(names)
-    emails.append(email)
-    name.write(names)
-    name.close()
-    emailList.write(emails)
-    emailList.close()
-    Ename = open("names.json", "w")
-    emailList = open("emails.json", "w")
+    e1 = Entry(top, textvariable = name).grid(column = 1, row = 1)
+    e2 = Entry(top, textvariable = email).grid(column = 1, row = 1)
+  
+  
+      
+    nameList = open("names.py", "w")
+    emailList = open("emails.py", "w")
+
+    names.append(e1)
+    emails.append(e2)
+
+
+    for element in emailList:
+      emails.write(element)
+      emails.write(',')
+    emails.close()
+  
+    for element in nameList:
+      names.write(element)
+      names.write(',')
+    names.close()
+
   def removeEmail(names):
     removeNum = int(name.index(names))
     removeSTR = (email[1])
@@ -192,21 +209,22 @@ class email:
     email.remove(removeSTR)
     print("Removed")
   def sendEmail():
-    msg = MIMEMultipart()       # create a message
-    # setup the parameters of the message
-    msg['From']=username
-    msg['To']=email
-    msg['Subject']="This is TEST"
-    msg['Body']=messages
-
-    s.send_message(msg)
-    print("HI")
-  def listCheck():
-    if(len(emails)>500):
-      print("You list of emails is too long to send in one day on a basic gmail account\n")
-      return 1
-    else:
-      return 0
+    L1 = Label(top, text="Username").grid(row = 0)
+    L2 = Label(top, text="Password").grid(row = 1)
+    e1 = Entry(top, textvariable = username,).grid(column = 1, row = 0)
+    e2 = Entry(top, textvariable = password).grid(column = 1, row = 1)
+    done = Button(top,text = "Done, you will have to close the window after you press this", command = email.loginSMTP)
+    top.mainloop()
+    i = 0
+    for i in range(len(names)):
+      msg = MIMEMultipart()       # create a message
+      # setup the parameters of the message
+      msg['From']=usernames[i]
+      msg['To']=email
+      msg['Subject']="This is TEST"
+      msg['Body']=messages
+      s.send_message(msg)
+      print("HI")
     
 email.login()
 email.run()
