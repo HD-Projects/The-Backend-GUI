@@ -1,21 +1,13 @@
 import smtplib
 import json
+from lists import (emails, names)
 from tkinter import *
 import cgi
 import time
-
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-
-
-nameList = open("names.py", "w")
-emailList = open("emails.py", "w")
-
 listToWrite = ["hi","this","is","a","test"]
-
-names = ["Alex","Riley"]
-emails = ["adickhans@gmail.com","rilesdk@gmail.com"]
 
 print ("Content-type: text/html")
 
@@ -34,16 +26,32 @@ supportedList = "Gmail, Outlook, Yahoo(Yahoo plus not supported yet), Office 365
 username = ""
 password = ""
 
+name = ""
+email = ""
+
 e1 = ""
 e2 = ""
 
 class email:
+  def save():
+    theLists = open("lists.py", "w")
+    stringToSave = 'names = ['
+    for i in range(len(names)-2):
+      stringToSave = stringToSave+'"'+names[i]+'",'
+    stringToSave = stringToSave+'"'+names[(len(names)-1)]+'"]\nemails = ['
+    i = 1
+    for i in range(len(emails)-2):
+      stringToSave = stringToSave+'"'+emails[i]+'",'
+    stringToSave = stringToSave+'"'+emails[(len(emails)-1)]+'"]'
+    theLists.write(stringToSave)
+    print(stringToSave)
   def run():
     top = Tk()
     B1 = Button(top, text = "Add Email To The sending list", command = email.addEmail).grid(row = 0)
     B2 = Button(top, text = "Remove Email From the Sending list", command = email.removeEmail).grid(row = 1)
     B3 = Button(top, text = "Send Emails", command = email.sendEmail).grid(row = 2)
-    B4 = Button(top, text = "Done", command = top.destroy).grid(row = 3)
+    B4 = Button(top, text = "Save email list", command = email.save).grid(row = 2)
+    B5 = Button(top, text = "Done", command = top.destroy).grid(row = 3)
     top.mainloop()
   def getCredentials():
      username = e1
@@ -180,33 +188,17 @@ class email:
     top.mainloop()
   def addEmail():
     top = Tk()
-    top.destroy()
-    top = Tk()
     L1 = Label(top, text="Name").grid(row = 0)
     L2 = Label(top, text="Email").grid(row = 1)
     e1 = Entry(top, textvariable = "name").grid(column = 1, row = 0)
     e2 = Entry(top, textvariable = "email").grid(column = 1, row = 1)
     Button(top, text = "Done", command = top.destroy).grid(row = 9)
-  
-      
-    nameList = open("names.py", "w")
-    emailList = open("emails.py", "w")
-
-    names.append(e1)
-    emails.append(e2)
+    top.mainloop()
 
 
-    for element in emailList:
-      emails.write(element)
-      emails.write(',')
-    emails.close()
-  
-    for element in nameList:
-      names.write(element)
-      names.write(',')
-    names.close()
-    email.run()
 
+    names.append(str(e1))
+    emails.append(str(e2))
   def removeEmail(names):
     removeNum = int(name.index(names))
     removeSTR = (email[removeNum])
@@ -215,11 +207,11 @@ class email:
     print("Removed")
   def sendEmail():
     top = Tk()
-    L1 = Label(top, text="Username").grid(row = 0)
-    L2 = Label(top, text="Password").grid(row = 1)
+    L1 = Label(top, text="Message").grid(row = 0)
+    L2 = Label(top, text="Subject").grid(row = 1)
     e1 = Entry(top, textvariable = username,).grid(column = 1, row = 0)
     e2 = Entry(top, textvariable = password).grid(column = 1, row = 1)
-    done = Button(top,text = "Done, you will have to close the window after you press this", command = email.loginSMTP)
+    done = Button(top,text = "Done, you will have to close the window after you press this", command = email.getCredentials)
     top.mainloop()
     i = 0
     for i in range(len(names)):
@@ -228,9 +220,10 @@ class email:
       msg['From']=usernames
       msg['To']=emails[i]
       msg['Subject']="This is TEST"
-      msg['Body']=messages
+      msg['Body']="Dear "+names[i]+",\n"+messages
       s.send_message(msg)
-      print("HI")
-    
+      print("Send, "+msg)
+      msg.destroy()
+
 email.login()
 email.run()
